@@ -4,27 +4,31 @@ import Borad.Board;
 import Player.Player;
 import Player.Player1;
 import Player.Player2;
+import Screen.MyPanel;
 
 public class Game {
 	static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		Board board = new Board(6, 6);
-		board.display();
+		Board board = new Board(8, 8);
+//		board.display();
+		
 
 		// プレイヤーを生成
 		Player player1 = new Player1(board);
 		Player player2 = new Player2(board);
+		Player[] players = { player1, player2 };
+		
+		new MyPanel("Othello",board, players);
 
 		// ゲーム中
-		while (board.isGameContinued()) {
-			inputDiskPosition(player1, board);
-			inputDiskPosition(player2, board);
-		}
+//		while (board.isGameContinued()) {
+//			inputDiskPosition(player1, board);
+//			inputDiskPosition(player2, board);
+//		}
 
 		// 結果
-		Player[] players = { player1, player2 };
-		board.result(players);
+//		board.result(players);
 
 		sc.close();
 	}

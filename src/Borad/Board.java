@@ -5,9 +5,12 @@ import disk.Disks;
 
 public class Board {
 	private Disks[][] board;
+	private int height, width;
 
 	public Board(int width, int height) {
 		this.board = new Disks[height][width];
+		this.height = height;
+		this.width = width;
 		setup();
 	}
 
@@ -78,12 +81,12 @@ public class Board {
 		if (get(x, y) != null) {
 			return false;
 		}
-		for (int i = -1; i < 2; i++) {
-			for (int k = -1; k < 2; k++) {
-				if (i == 0 && k == 0) {
+		for (int dy = -1; dy < 2; dy++) {
+			for (int dx = -1; dx < 2; dx++) {
+				if (dx == 0 && dy == 0) {
 					continue;
 				}
-				if (validateMove(x, y, k, i, player)) {
+				if (validateMove(x, y, dx, dy, player)) {
 					isValidMove = true;
 				}
 
@@ -139,19 +142,17 @@ public class Board {
 	public void result(Player[] players) {
 		int max = -1;
 		int diskCount;
+		int drawCount = 1;
 		Player winner = null;
 		for (Player player : players) {
 			diskCount = diskCount(player);
+			if (max == diskCount) {
+				drawCount++;
+			}
 			if (max < diskCount) {
 				max = diskCount;
 				winner = player;
-			}
-		}
-
-		int drawCount = 0;
-		for (Player player : players) {
-			if (max == diskCount(player)) {
-				drawCount++;
+				drawCount = 1;
 			}
 		}
 		if (drawCount >= 2) {
@@ -160,5 +161,13 @@ public class Board {
 		}
 		winner.win();
 		return;
+	}
+	
+	public int height() {
+		return this.height;
+	}
+	
+	public int width() {
+		return this.width;
 	}
 }

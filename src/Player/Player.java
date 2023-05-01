@@ -28,10 +28,7 @@ public class Player implements Put {
 	}
 
 	public boolean put(int x, int y) {
-		if (board.put(this, x, y)) {
-			return true;
-		}
-		return false;
+		return board.put(this, x, y);
 	}
 
 	public void win() {
