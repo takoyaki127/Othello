@@ -1,15 +1,13 @@
 package Borad;
 
 import Player.Player;
-import disk.BlackDisk;
-import disk.Disk;
-import disk.WhiteDisk;
+import disk.Disks;
 
 public class Board {
-	private int[][] board;
+	private Disks[][] board;
 	
 	public Board(int width, int height) {
-		this.board = new int[height][width];
+		this.board = new Disks[height][width];
 		setup();
 	}
 	
@@ -26,16 +24,23 @@ public class Board {
 		for (int y=0; y<board.length; y++) {
 			System.out.print(" " + y + "|");
 			for (int x=0; x<board[y].length; x++) {
-				if (board[y][x] == 0) {
+				if (board[y][x] == null) {
 					System.out.print(" _");
 				}
 				else {
-					System.out.print(" " + board[y][x]);
+					System.out.print(" " + ordinal(x,y));
 				}
 			}
 			System.out.println();
 		}
 		System.out.println();
+	}
+	
+	private int ordinal(int x,int y) {
+		if (board[y][x] == Disks.White) {
+			return 1;
+		}
+		return 2;
 	}
 	
 	public boolean put(Player player, int x, int y) {
@@ -46,16 +51,16 @@ public class Board {
 		return false;
 	}
 	
-	private void put(Disk disk,int x, int y) {
-		board[y][x] = disk.color();
+	private void put(Disks disk,int x, int y) {
+		board[y][x] = disk;
 	}
 	
-	public int get(int x, int y) {
+	public Disks get(int x, int y) {
 		try {
 			return board[y][x];
 		}
 		catch(Exception e){
-			return -1;
+			return null;
 		}
 	}
 	
@@ -63,16 +68,16 @@ public class Board {
 		int row_center = board.length/2 - 1;
 		int col_center = board[0].length/2 - 1;
 		
-		put(new WhiteDisk(), row_center, col_center);
-		put(new WhiteDisk(), row_center + 1, col_center + 1);
+		put(Disks.White, row_center, col_center);
+		put(Disks.White, row_center + 1, col_center + 1);
 		
-		put(new BlackDisk(), row_center + 1, col_center);
-		put(new BlackDisk(), row_center	, col_center + 1);
+		put(Disks.Black, row_center + 1, col_center);
+		put(Disks.Black, row_center	, col_center + 1);
 	}
 	
 	private boolean update(int x, int y, Player player) {
 		boolean isValidMove = false;
-		if (get(x,y) != 0) {
+		if (get(x,y) != null) {
 			return false;
 		}
 		for(int i=-1;i<2;i++) {
@@ -110,7 +115,7 @@ public class Board {
 		int count = 0;
 		for(int i=0;i<board.length;i++) {
 			for(int k=0;k<board[0].length;k++) {
-				if (board[i][k] == 0) {
+				if (board[i][k] == null) {
 					count++;
 				}
 			}

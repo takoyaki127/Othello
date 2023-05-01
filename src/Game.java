@@ -9,7 +9,7 @@ public class Game {
 	static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		Board board = new Board(4, 4);
+		Board board = new Board(６, ６);
 		board.display();
 
 		// プレイヤーを生成
@@ -36,20 +36,27 @@ public class Game {
 		return false;
 	}
 
-	private static int[] scan() {
-		// Todo: エラー時の処理を追加する
+	private static int[] scan(Player player) {
 		int[] pos = new int[2];
-		pos[0] = sc.nextInt();
-		pos[1] = sc.nextInt();
-
+		while(true) {
+			System.out.println("負の値を入力でパス");
+			System.out.print(player.name() + "->");
+			try {
+				pos[0] = Integer.parseInt(sc.next());
+				pos[1] = Integer.parseInt(sc.next());
+				break;
+			}
+			catch(Exception e) {
+				System.out.println("不正な値です\n");
+			}
+		}
 		return pos;
 	}
 
 	private static void inputDiskPosition(Player player, Board board) {
 		boolean putDisk = false;
 		while (board.isGameContinued() && putDisk == false) {
-			System.out.print(player.name() + "->");
-			int[] pos = scan();
+			int[] pos = scan(player);
 			if (passCheck(pos[0], pos[1])) {
 				break;
 			}
