@@ -5,12 +5,9 @@ import disk.DiskColor;
 
 public class Board {
 	private DiskColor[][] board;
-	private int height, width;
 
 	public Board(int width, int height) {
 		this.board = new DiskColor[height][width];
-		this.height = height;
-		this.width = width;
 		setup();
 	}
 
@@ -162,12 +159,12 @@ public class Board {
 		winner.win();
 		return;
 	}
-	
+
 	public int height() {
-		return this.height;
+		return this.board.length;
 	}
-	
+
 	public int width() {
-		return this.width;
+		return this.board[0].length;
 	}
 }
