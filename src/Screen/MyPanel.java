@@ -19,14 +19,14 @@ public class MyPanel extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	private Board board;
 	private Player[] players;
-	private Disk disk = new Disk(0.7);
+	private Disk disk;
 	private Cell cell;
 
 	public MyPanel(String title, Board board, Player[] players) {
 		super(true);
 		this.board = board;
 		this.players = players;
-		
+
 		JFrame frame = new JFrame(title);
 		Container frmContentPane = frame.getContentPane();
 		frmContentPane.add(this);
@@ -41,36 +41,34 @@ public class MyPanel extends JPanel implements MouseListener {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		this.cell = getCell();
 		drawLines(g);
 		drawDisks(g);
 	}
-	
-	private void drawLines(Graphics g) {
-		cell = getCell();
-		drawHorizontalLine(g, cell);
-		drawVerticalLine(g, cell);
-	}
-	
+
 	private Cell getCell() {
 		int height = getHeight() / board.height();
 		int width = getWidth() / board.width();
-		return new Cell(height,width);
+		return new Cell(height, width);
 	}
 
-	private void drawHorizontalLine(Graphics g, Cell cell) {
+	private void drawLines(Graphics g) {
+		drawHorizontalLine(g);
+		drawVerticalLine(g);
+	}
+
+	private void drawHorizontalLine(Graphics g) {
 		for (int i = 1; i < board.height(); i++) {
 			int y = cell.height() * i;
 			g.drawLine(0, y, getWidth(), y);
 		}
-		disk.setY(cell.height());
 	}
 
-	private void drawVerticalLine(Graphics g, Cell cell) {
+	private void drawVerticalLine(Graphics g) {
 		for (int i = 1; i < board.width(); i++) {
 			int x = cell.width() * i;
 			g.drawLine(x, 0, x, getHeight());
 		}
-		disk.setX(cell.width());
 	}
 
 	int turn = 0;
@@ -125,6 +123,7 @@ public class MyPanel extends JPanel implements MouseListener {
 	}
 
 	private void drawDisks(Graphics g) {
+		createDisk(0.7);
 		double margin = ((1 - disk.size()) / 2);
 		for (int y = 0; y < board.height(); y++) {
 			for (int x = 0; x < board.width(); x++) {
@@ -133,6 +132,10 @@ public class MyPanel extends JPanel implements MouseListener {
 				drawDisk(g, xdisk, ydisk, x, y);
 			}
 		}
+	}
+
+	private void createDisk(double diskSize) {
+		this.disk = new Disk(diskSize, cell);
 	}
 
 	private void drawDisk(Graphics g, int x, int y, int xNum, int yNum) {
