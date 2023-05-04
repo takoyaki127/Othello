@@ -7,7 +7,7 @@ import Player.Player2;
 import Screen.MyPanel;
 
 public class Game {
-	static Scanner sc = new Scanner(System.in);
+//	static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		Board board = new Board(8, 8);
@@ -30,41 +30,41 @@ public class Game {
 		// 結果
 //		board.result(players);
 
-		sc.close();
+//		sc.close();
 	}
 
-	private static boolean passCheck(int x, int y) {
-		if (x < 0 || y < 0) {
-			return true;
-		}
-		return false;
-	}
+//	private static boolean passCheck(int x, int y) {
+//		if (x < 0 || y < 0) {
+//			return true;
+//		}
+//		return false;
+//	}
 
-	private static int[] scan(Player player) {
-		int[] pos = new int[2];
-		while (true) {
-			System.out.println("負の値を入力でパス");
-			System.out.print(player.name() + "->");
-			try {
-				pos[0] = Integer.parseInt(sc.next());
-				pos[1] = Integer.parseInt(sc.next());
-				break;
-			} catch (Exception e) {
-				System.out.println("不正な値です\n");
-			}
-		}
-		return pos;
-	}
+//	private static int[] scan(Player player) {
+//		int[] pos = new int[2];
+//		while (true) {
+//			System.out.println("負の値を入力でパス");
+//			System.out.print(player.name() + "->");
+//			try {
+//				pos[0] = Integer.parseInt(sc.next());
+//				pos[1] = Integer.parseInt(sc.next());
+//				break;
+//			} catch (Exception e) {
+//				System.out.println("不正な値です\n");
+//			}
+//		}
+//		return pos;
+//	}
 
-	private static void inputDiskPosition(Player player, Board board) {
-		boolean putDisk = false;
-		while (board.isGameContinued() && putDisk == false) {
-			int[] pos = scan(player);
-			if (passCheck(pos[0], pos[1])) {
-				break;
-			}
-			putDisk = player.put(pos[0], pos[1]);
-		}
-		board.display();
-	}
+//	private static void inputDiskPosition(Player player, Board board) {
+//		boolean putDisk = false;
+//		while (board.isGameContinued() && putDisk == false) {
+//			int[] pos = scan(player);
+//			if (passCheck(pos[0], pos[1])) {
+//				break;
+//			}
+//			putDisk = player.put(pos[0], pos[1]);
+//		}
+//		board.display();
+//	}
 }

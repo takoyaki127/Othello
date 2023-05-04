@@ -1,14 +1,14 @@
 package Player;
 
 import Borad.Board;
-import disk.Disks;
+import disk.DiskColor;
 
 public class Player implements Put {
 	private Board board;
 	private String name;
-	private Disks myDisk, enemyDisk;
+	private DiskColor myDisk, enemyDisk;
 
-	public Player(Board board, String name, Disks myDisk, Disks enemyDisk) {
+	public Player(Board board, String name, DiskColor myDisk, DiskColor enemyDisk) {
 		this.board = board;
 		this.myDisk = myDisk;
 		this.enemyDisk = enemyDisk;
@@ -19,11 +19,11 @@ public class Player implements Put {
 		return name;
 	}
 
-	public Disks mycolor() {
+	public DiskColor mycolor() {
 		return myDisk;
 	}
 
-	public Disks enemyColor() {
+	public DiskColor enemyColor() {
 		return enemyDisk;
 	}
 

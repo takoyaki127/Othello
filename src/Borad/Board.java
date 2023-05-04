@@ -1,14 +1,14 @@
 package Borad;
 
 import Player.Player;
-import disk.Disks;
+import disk.DiskColor;
 
 public class Board {
-	private Disks[][] board;
+	private DiskColor[][] board;
 	private int height, width;
 
 	public Board(int width, int height) {
-		this.board = new Disks[height][width];
+		this.board = new DiskColor[height][width];
 		this.height = height;
 		this.width = width;
 		setup();
@@ -39,7 +39,7 @@ public class Board {
 	}
 
 	private String ordinal(int x, int y) {
-		if (board[y][x] == Disks.White) {
+		if (board[y][x] == DiskColor.White) {
 			return "●";
 		}
 		return "○";
@@ -53,11 +53,11 @@ public class Board {
 		return false;
 	}
 
-	private void put(Disks disk, int x, int y) {
+	private void put(DiskColor disk, int x, int y) {
 		board[y][x] = disk;
 	}
 
-	public Disks get(int x, int y) {
+	public DiskColor get(int x, int y) {
 		try {
 			return board[y][x];
 		} catch (Exception e) {
@@ -69,11 +69,11 @@ public class Board {
 		int row_center = board.length / 2 - 1;
 		int col_center = board[0].length / 2 - 1;
 
-		put(Disks.White, row_center, col_center);
-		put(Disks.White, row_center + 1, col_center + 1);
+		put(DiskColor.White, row_center, col_center);
+		put(DiskColor.White, row_center + 1, col_center + 1);
 
-		put(Disks.Black, row_center + 1, col_center);
-		put(Disks.Black, row_center, col_center + 1);
+		put(DiskColor.Black, row_center + 1, col_center);
+		put(DiskColor.Black, row_center, col_center + 1);
 	}
 
 	private boolean update(int x, int y, Player player) {

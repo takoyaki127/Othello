@@ -1,5 +1,5 @@
 package disk;
 
-public enum Disks {
+public enum DiskColor {
 	White, Black
 }
