@@ -11,37 +11,6 @@ public class Board {
 		setup();
 	}
 
-	public void display() {
-		System.out.print("  |");
-		for (int i = 0; i < board[0].length; i++) {
-			System.out.print(" " + i);
-		}
-		System.out.print("\n---");
-		for (int i = 0; i < board[0].length; i++) {
-			System.out.print("--");
-		}
-		System.out.println();
-		for (int y = 0; y < board.length; y++) {
-			System.out.print(" " + y + "|");
-			for (int x = 0; x < board[y].length; x++) {
-				if (board[y][x] == null) {
-					System.out.print(" _");
-				} else {
-					System.out.print(" " + ordinal(x, y));
-				}
-			}
-			System.out.println();
-		}
-		System.out.println();
-	}
-
-	private String ordinal(int x, int y) {
-		if (board[y][x] == DiskColor.White) {
-			return "●";
-		}
-		return "○";
-	}
-
 	public boolean put(Player player, int x, int y) {
 		if (update(x, y, player)) {
 			board[y][x] = player.mycolor();
