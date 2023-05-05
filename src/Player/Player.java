@@ -16,15 +16,15 @@ public class Player {
 		this.name = name;
 	}
 	
-	public static Player getInstance(String name, Board board) {
-		if (count == 0){
-			count++;
+	public static Player getInstance(String name, Board board){
+		count++;
+		if (count == 1){
 			return new Player(board,name,DiskColor.White,DiskColor.Black);
 		}
-		if (count == 1) {
+		if (count == 2) {
 			return new Player(board,name,DiskColor.Black,DiskColor.White);
 		}
-		return null;
+		throw new UnsupportedOperationException();  // Playerのインスタンスは２人まで生成できるようにする
 	}
 
 	public String name() {
