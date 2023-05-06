@@ -42,13 +42,14 @@ public class MyPanel extends JPanel implements MouseListener, ActionListener {
 		frame.setBounds(1000, 100, 600, 670);
 
 		passButton = new JButton("Pass");
+		passButton.setFont(new Font("メイリオ", Font.PLAIN, 15));
 		passButton.addActionListener(this);
 		add(passButton);
 		frmContentPane.add(passButton, BorderLayout.SOUTH);
 
 		state = new JLabel("");
 		state.setHorizontalAlignment(JLabel.CENTER);
-		state.setFont(new Font("メイリオ", Font.PLAIN, 20));
+		state.setFont(new Font("メイリオ", Font.BOLD, 20));
 		playerNameSetLabel();
 		frmContentPane.add(state, BorderLayout.NORTH);
 

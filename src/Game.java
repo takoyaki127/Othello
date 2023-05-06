@@ -13,7 +13,6 @@ public class Game {
 		Player[] players = { player1, player2 };
 
 		new MyPanel("Othello", board, players);
-
 	}
 
 }
