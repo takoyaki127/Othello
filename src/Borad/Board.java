@@ -15,11 +15,11 @@ public class Board {
 		int row_center = (height() - 1) / 2;
 		int col_center = (width() - 1) / 2;
 
-		putDisk(DiskColor.White, row_center, col_center);
-		putDisk(DiskColor.White, row_center + 1, col_center + 1);
+		putDisk(DiskColor.White, col_center, row_center);
+		putDisk(DiskColor.White, col_center + 1, row_center + 1);
 
-		putDisk(DiskColor.Black, row_center + 1, col_center);
-		putDisk(DiskColor.Black, row_center, col_center + 1);
+		putDisk(DiskColor.Black, col_center + 1, row_center);
+		putDisk(DiskColor.Black, col_center, row_center + 1);
 	}
 
 	public int height() {
@@ -29,7 +29,7 @@ public class Board {
 	public int width() {
 		return this.board[0].length;
 	}
-	
+
 	public boolean playerPut(Player player, int x, int y) {
 		if (roundUpdate(x, y, player)) {
 			putDisk(player.mycolor(), x, y);
@@ -37,16 +37,15 @@ public class Board {
 		}
 		return false;
 	}
-	
+
 	private void putDisk(DiskColor disk, int x, int y) {
 		try {
 			board[y][x] = disk;
-		}
-		catch(IndexOutOfBoundsException e) {
+		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public DiskColor get(int x, int y) {
 		try {
 			return board[y][x];
@@ -59,7 +58,7 @@ public class Board {
 		if (get(x, y) != null) {
 			return false;
 		}
-		
+
 		boolean isValidMove = false;
 		for (int dy = -1; dy < 2; dy++) {
 			for (int dx = -1; dx < 2; dx++) {
@@ -72,8 +71,8 @@ public class Board {
 	}
 
 	private boolean directUpdate(int x, int y, int dx, int dy, Player player) {
-		if (get(x+dx, y+dy) == player.enemyColor()) {
-			if (get(x+dx + dx, y+dy + dy) == player.mycolor()) {
+		if (get(x + dx, y + dy) == player.enemyColor()) {
+			if (get(x + dx + dx, y + dy + dy) == player.mycolor()) {
 				putDisk(player.mycolor(), x + dx, y + dy);
 				return true;
 			}
@@ -87,7 +86,7 @@ public class Board {
 
 	public boolean isGameContinued(Player[] players) {
 		for (Player player : players) {
-			if(playerCanPut(player)) {
+			if (playerCanPut(player)) {
 				return true;
 			}
 		}
