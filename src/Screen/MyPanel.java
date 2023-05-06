@@ -1,13 +1,18 @@
 package Screen;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Borad.Board;
@@ -15,12 +20,14 @@ import Player.Player;
 import disk.Disk;
 import disk.DiskColor;
 
-public class MyPanel extends JPanel implements MouseListener {
+public class MyPanel extends JPanel implements MouseListener, ActionListener {
 	private static final long serialVersionUID = 1L;
 	private Board board;
 	private Player[] players;
 	private Disk disk;
 	private Cell cell;
+	private JButton passButton;
+	private JLabel resultLabel;
 
 	public MyPanel(String title, Board board, Player[] players) {
 		super(true);
@@ -31,12 +38,20 @@ public class MyPanel extends JPanel implements MouseListener {
 		Container frmContentPane = frame.getContentPane();
 		frmContentPane.add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(1000, 100, 600, 600);
-		frame.setVisible(true);
+		frame.setBounds(1000, 100, 600, 630);
 
-		setLayout(new GridLayout());
+		passButton = new JButton("Pass");
+		passButton.addActionListener(this);
+		add(passButton);
+		frmContentPane.add(passButton, BorderLayout.SOUTH);
+
+		resultLabel = new JLabel("");
+		resultLabel.setHorizontalAlignment(JLabel.CENTER);
+		resultLabel.setFont(new Font("メイリオ", Font.PLAIN, 20));
+		frmContentPane.add(resultLabel, BorderLayout.NORTH);
 
 		addMouseListener(this);
+		frame.setVisible(true);
 	}
 
 	public void paintComponent(Graphics g) {
@@ -92,29 +107,6 @@ public class MyPanel extends JPanel implements MouseListener {
 
 	}
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
 	private int[] getCellAt(Point point) {
 		int xCellNum = (int) (point.getX() / cell.width());
 		int yCellNum = (int) (point.getY() / cell.height());
@@ -147,8 +139,43 @@ public class MyPanel extends JPanel implements MouseListener {
 	}
 
 	private void finish() {
-		if (board.isGameContinued() == false) {
-			board.result(players);
+		if (board.isGameContinued(players) == false) {
+			Player winner = board.result(players);
+			if (winner == null) {
+				resultLabel.setText("Draw");
+				return;
+			}
+			resultLabel.setText(winner.name() + " Win !!");
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (passButton.equals(e.getSource())) {
+			turn++;
 		}
 	}
 }
