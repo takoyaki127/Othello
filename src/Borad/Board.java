@@ -77,8 +77,7 @@ public class Board {
 		return false;
 	}
 
-	public boolean isGameContinued() {
-		// Todo: 誰も石を置けなくなったときにfalseを返す処理を追加
+	public boolean isGameContinued(Player[] players) {
 		int count = 0;
 		for (int i = 0; i < board.length; i++) {
 			for (int k = 0; k < board[0].length; k++) {
@@ -90,7 +89,50 @@ public class Board {
 		if (count == 0) {
 			return false;
 		}
-		return true;
+		return allPlayerCanPut(players);
+	}
+
+	private boolean allPlayerCanPut(Player[] players) {
+		for (Player player : players) {
+			for (int y = 0; y < board.length; y++) {
+				for (int x = 0; x < board[y].length; x++) {
+					if (canPut(x, y, player)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean canPut(int x, int y, Player player) {
+		if (get(x, y) != null) {
+			return false;
+		}
+		return roundSerch(x, y, player);
+	}
+
+	private boolean roundSerch(int x, int y, Player player) {
+		for (int dy = -1; dy < 2; dy++) {
+			for (int dx = -1; dx < 2; dx++) {
+				if (directSerch(x, y, dx, dy, player)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private boolean directSerch(int x, int y, int dx, int dy, Player player) {
+		if (get(x + dx, y + dy) == player.enemyColor()) {
+			if (get(x + dx + dx, y + dy + dy) == player.mycolor()) {
+				return true;
+			}
+			if (directSerch(x + dx, y + dy, dx, dy, player)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private int diskCount(Player player) {
@@ -105,7 +147,7 @@ public class Board {
 		return count;
 	}
 
-	public void result(Player[] players) {
+	public Player result(Player[] players) {
 		int max = -1;
 		int diskCount;
 		int drawCount = 1;
@@ -123,10 +165,10 @@ public class Board {
 		}
 		if (drawCount >= 2) {
 			System.out.println("draw");
-			return;
+			return null;
 		}
 		winner.win();
-		return;
+		return winner;
 	}
 
 	public int height() {
