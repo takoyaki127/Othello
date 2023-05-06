@@ -27,7 +27,8 @@ public class MyPanel extends JPanel implements MouseListener, ActionListener {
 	private Disk disk;
 	private Cell cell;
 	private JButton passButton;
-	private JLabel resultLabel;
+	private JLabel state;
+	private int turn = 0;
 
 	public MyPanel(String title, Board board, Player[] players) {
 		super(true);
@@ -38,17 +39,18 @@ public class MyPanel extends JPanel implements MouseListener, ActionListener {
 		Container frmContentPane = frame.getContentPane();
 		frmContentPane.add(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(1000, 100, 600, 630);
+		frame.setBounds(1000, 100, 600, 670);
 
 		passButton = new JButton("Pass");
 		passButton.addActionListener(this);
 		add(passButton);
 		frmContentPane.add(passButton, BorderLayout.SOUTH);
 
-		resultLabel = new JLabel("");
-		resultLabel.setHorizontalAlignment(JLabel.CENTER);
-		resultLabel.setFont(new Font("メイリオ", Font.PLAIN, 20));
-		frmContentPane.add(resultLabel, BorderLayout.NORTH);
+		state = new JLabel("");
+		state.setHorizontalAlignment(JLabel.CENTER);
+		state.setFont(new Font("メイリオ", Font.PLAIN, 20));
+		playerNameSetLabel();
+		frmContentPane.add(state, BorderLayout.NORTH);
 
 		addMouseListener(this);
 		frame.setVisible(true);
@@ -73,7 +75,7 @@ public class MyPanel extends JPanel implements MouseListener, ActionListener {
 	}
 
 	private void drawHorizontalLine(Graphics g) {
-		for (int i = 1; i < board.height(); i++) {
+		for (int i = 0; i < board.height(); i++) {
 			int y = cell.height() * i;
 			g.drawLine(0, y, getWidth(), y);
 		}
@@ -86,25 +88,12 @@ public class MyPanel extends JPanel implements MouseListener, ActionListener {
 		}
 	}
 
-	int turn = 0;
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		int[] pos = getCellAt(e.getPoint());
-		// System.out.println(pos[0]+ "" + pos[1]);
-
-		boolean isValidMove = false;
-		if (turn % players.length == 0) {
-			isValidMove = players[0].put(pos[0], pos[1]);
-		} else {
-			isValidMove = players[1].put(pos[0], pos[1]);
+	private void playerNameSetLabel() {
+		if (turn % 2 == 0) {
+			state.setText(players[0].name());
+			return;
 		}
-		if (isValidMove) {
-			turn++;
-			repaint();
-			finish();
-		}
-
+		state.setText(players[1].name());
 	}
 
 	private int[] getCellAt(Point point) {
@@ -142,11 +131,29 @@ public class MyPanel extends JPanel implements MouseListener, ActionListener {
 		if (board.isGameContinued(players) == false) {
 			Player winner = board.result(players);
 			if (winner == null) {
-				resultLabel.setText("Draw");
+				state.setText("Draw");
 				return;
 			}
-			resultLabel.setText(winner.name() + " Win !!");
+			state.setText(winner.name() + " Win !!");
+			return;
 		}
+		playerNameSetLabel();
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int[] pos = getCellAt(e.getPoint());
+		// System.out.println(pos[0]+ "" + pos[1]);
+
+		int player_num = turn % players.length;
+		boolean isValidMove = players[player_num].put(pos[0], pos[1]);
+		if (isValidMove) {
+			turn++;
+			finish();
+			repaint();
+			return;
+		}
+		return;
 	}
 
 	@Override
@@ -176,6 +183,8 @@ public class MyPanel extends JPanel implements MouseListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (passButton.equals(e.getSource())) {
 			turn++;
+			playerNameSetLabel();
+			repaint();
 		}
 	}
 }
