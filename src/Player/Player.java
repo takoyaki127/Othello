@@ -40,7 +40,7 @@ public class Player {
 	}
 
 	public boolean put(int x, int y) {
-		return board.put(this, x, y);
+		return board.playerPut(this, x, y);
 	}
 
 	public void win() {
