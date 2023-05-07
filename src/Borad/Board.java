@@ -12,14 +12,14 @@ public class Board {
 	}
 
 	private void setup() {
-		int row_center = (height() - 1) / 2;
-		int col_center = (width() - 1) / 2;
+		int height_center = (height() - 1) / 2;
+		int width_center = (width() - 1) / 2;
 
-		putDisk(DiskColor.White, col_center, row_center);
-		putDisk(DiskColor.White, col_center + 1, row_center + 1);
+		putDisk(DiskColor.White, width_center, height_center);
+		putDisk(DiskColor.White, width_center + 1, height_center + 1);
 
-		putDisk(DiskColor.Black, col_center + 1, row_center);
-		putDisk(DiskColor.Black, col_center, row_center + 1);
+		putDisk(DiskColor.Black, width_center + 1, height_center);
+		putDisk(DiskColor.Black, width_center, height_center + 1);
 	}
 
 	public int height() {
