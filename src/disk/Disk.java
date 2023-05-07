@@ -8,15 +8,15 @@ public class Disk {
 
 	public Disk(double diskSize, Cell cell) {
 		this.diskSize = diskSize;
-		setY(cell);
-		setX(cell);
+		setYSize(cell);
+		setXSize(cell);
 	}
 
 	public double size() {
 		return diskSize;
 	}
 
-	private void setY(Cell cell) {
+	private void setYSize(Cell cell) {
 		diskYSize = (int) (cell.height() * diskSize);
 	}
 
@@ -24,7 +24,7 @@ public class Disk {
 		return diskYSize;
 	}
 
-	private void setX(Cell cell) {
+	private void setXSize(Cell cell) {
 		diskXSize = (int) (cell.width() * diskSize);
 	}
 
