@@ -147,6 +147,9 @@ public class Board {
 	}
 
 	public Player result(Player[] players) {
+		if (players.length == 0) {
+			return null;
+		}
 		int max = -1;
 		int diskCount;
 		int drawCount = 1;
