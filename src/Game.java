@@ -2,9 +2,9 @@ import Borad.Board;
 import Player.Player;
 import Screen.MyPanel;
 
-public class Game {
+class Game {
 
-	public static void main(String[] args) {
+	static void start() {
 		Board board = new Board(8, 8);
 
 		// プレイヤーを生成
